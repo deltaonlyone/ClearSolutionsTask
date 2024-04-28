@@ -98,7 +98,7 @@ public class UserService {
 
     public void deleteById(Long userId) {
         if (userRepository.existsById(userId)) {
-            return;
+            throw new UserNotFoundException(userId);
         }
         userRepository.deleteById(userId);
     }
@@ -110,6 +110,5 @@ public class UserService {
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
-
 
 }

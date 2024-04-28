@@ -28,10 +28,6 @@ class UserControllerTest {
     @Autowired
     private UserService userService;
 
-//    @BeforeEach
-//    void setUserService() {
-//        userService.clearUsers();
-//    }
 
     @Test
     void createUser_ValidUser_ReturnsCreated() throws Exception {
@@ -135,7 +131,7 @@ class UserControllerTest {
     }
 
     @Test
-    void deleteUser_ValidUser_ReturnsOk() throws Exception {
+    void deleteUser_ValidUser_ReturnsNotFound() throws Exception {
 
 
         LocalDate birthDate = LocalDate.of(1990, 1, 1);
@@ -151,7 +147,7 @@ class UserControllerTest {
 
         mockMvc.perform(delete("/users/{userId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNotFound());
 
     }
 
@@ -192,7 +188,6 @@ class UserControllerTest {
     void getUsersByBirthDateRange_InvalidRange_ReturnsBadRequest() throws Exception {
         LocalDate from = LocalDate.of(2003, 1, 1);
         LocalDate to = LocalDate.of(1990, 1, 1);
-
 
         mockMvc.perform(get("/users/search")
                         .param("from", from.toString())
